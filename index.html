@@ -28,11 +28,59 @@
         <h1 class="header">Ancient Greek by Polis</h1>
         <p class="header"></p>
        	<ul>
-      		<li><a class="buttons github" href="/ancient-greek">Go to list</a></li>
+      		<li><a class="buttons github" href="#">Go to list</a></li>
           </ul>
       </header>
 
       <section>
+        <div id="list">
+          Loading...
+        </div>
+        <div id="course">
+          Loading...
+        </div>
+
+<script>
+const elements = {
+  list: document.querySelector('#list'),
+  course: document.querySelector('#course');
+};
+
+function rerender() {
+  if (location.hash === '') renderList();
+  else renderCourse(location.hash);
+}
+
+function renderList() {
+  elements.list.textContent = 'Loading...';
+  fetch('/ancient-greek/courses/index.json').then(res => {
+    res.json().then(list => {
+      elements.list.innerHTML = markupList(list);
+      elements.list.style.display = 'block';
+      elements.course.style.display = 'none';
+    });
+  })
+}
+  
+function markupList(list) {}
+
+function renderCourse(courseName) {
+  elements.course.textContent = 'Loading...';
+  fetch('/ancient-greek/courses/' + courseName + '.json').then(res => {
+    res.json().then(course => {
+      elements.course.innerHTML = markupCourse(course);
+      elements.course.style.display = 'block';
+      elements.list.style.display = 'none';
+    });
+  })
+}
+
+function markupCourse(course) {}
+
+rerender();
+window.addEventListener('hashchange', rerender);
+        </script>
+        <!-- 
         <h2 id="welcome-to-github-pages">Welcome to GitHub Pages</h2>
 
 <p>You can use the <a href="https://github.com/keyten/ancient-greek/edit/gh-pages/index.md">editor on GitHub</a> to maintain and preview the content for your website in Markdown files.</p>
@@ -69,11 +117,11 @@
 <h3 id="support-or-contact">Support or Contact</h3>
 
 <p>Having trouble with Pages? Check out our <a href="https://docs.github.com/categories/github-pages-basics/">documentation</a> or <a href="https://support.github.com/contact">contact support</a> and we’ll help you sort it out.</p>
-
+ -->
       </section>
 
       <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p><small>Created by <a href="https://keyten.github.io">Keyten</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
