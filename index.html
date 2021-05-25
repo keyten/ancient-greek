@@ -41,6 +41,182 @@
         </div>
 
 <script>
+
+const engToAgDic = [
+  // fricative
+  ["th", "θ"],
+  ["TH", "Θ"],
+
+  // with s
+  ["ks", "ξ"],
+  ["KS", "Ξ"],
+  ["ps", "ψ"],
+  ["PS", "Ψ"],
+
+  // consonants
+  ["b", "β"],
+  ["B", "Β"],
+  ["g", "γ"],
+  ["G", "Γ"],
+  ["d", "δ"],
+  ["D", "Δ"],
+  ["z", "ζ"],
+  ["Z", "Ζ"],
+  ["k", "κ"],
+  ["K", "Κ"],
+  ["l", "λ"],
+  ["L", "Λ"],
+  ["m", "μ"],
+  ["M", "Μ"],
+  ["n", "ν"],
+  ["N", "Ν"],
+  ["p", "π"],
+  ["P", "Π"],
+  ["r", "ρ"],
+  ["R", "Ρ"],
+  ["s", "σ"],
+  ["S", "Σ"],
+  ["t", "τ"],
+  ["T", "Τ"],
+  ["f", "φ"],
+  ["F", "Φ"],
+  ["h", "χ"],
+  ["H", "Χ"],
+
+  // with yota and accent and breathing
+  ["''ee/_i", "ᾕ"],
+  ["''ee\\_i", "ᾓ"],
+  ["''ee^_i", "ᾗ"],
+  ["'ee/_i", "ᾔ"],
+  ["'ee\\_i", "ᾒ"],
+  ["'ee^_i", "ᾖ"],
+  ["''EE/_i", "ᾝ"],
+  ["''EE\\_i", "ᾛ"],
+  ["''EE^_i", "ᾟ"],
+  ["'EE/_i", "ᾜ"],
+  ["'EE\\_i", "ᾚ"],
+  ["'EE^_i", "ᾞ"],
+  ["''a/_i", "ᾅ"],
+  ["''a\\_i", "ᾃ"],
+  ["''a^_i", "ᾇ"],
+  ["'a/_i", "ᾄ"],
+  ["'a\\_i", "ᾂ"],
+  ["'a^_i", "ᾆ"],
+
+  // with yota and breathing
+  ["''ee_i", "ᾑ"],
+  ["'ee_i", "ᾐ"],
+  ["''EE_i", "ᾙ"],
+  ["'EE_i", "ᾘ"],
+  ["''oo_i", "ᾡ"],
+  ["'oo_i", "ᾠ"],
+  ["''OO_i", "ᾩ"],
+  ["'OO_i", "ᾨ"],
+  ["''a_i", "ᾁ"],
+  ["'a_i", "ᾀ"],
+
+  // with yota and accent
+  ["ee/_i", "ῄ"],
+  ["ee\\_i", "ῂ"],
+  ["ee^_i", "ῇ"],
+  ["oo/_i", "ῴ"],
+  ["oo\\_i", "ῲ"],
+  ["oo^_i", "ῷ"],
+  ["a/_i", "ᾴ"],
+  ["a\\_i", "ᾲ"],
+  ["a^_i", "ᾷ"],
+
+  // with accent and breathing
+  ["''ee/", "ἥ"],
+  ["''ee\\", "ἣ"],
+  ["''ee^", "ἧ"],
+  ["'ee/", "ἤ"],
+  ["'ee\\", "ἢ"],
+  ["'ee^", "ἦ"],
+  ["''EE/", "Ἥ"],
+  ["''EE\\", "Ἣ"],
+  ["''EE^", "Ἧ"],
+  ["'EE/", "Ἤ"],
+  ["'EE\\", "Ἢ"],
+  ["'EE^", "Ἦ"],
+  ["''oo/", "ὥ"],
+  ["''oo\\", "ὣ"],
+  ["''oo^", "ὧ"],
+  ["'oo/", "ὤ"],
+  ["'oo\\", "ὢ"],
+  ["'oo^", "ὦ"],
+  ["''OO/", "Ὥ"],
+  ["''OO\\", "Ὣ"],
+  ["''OO^", "Ὧ"],
+  ["'OO/", "Ὤ"],
+  ["'OO\\", "Ὢ"],
+  ["'OO^", "Ὦ"],
+  ["''a/", "ἅ"],
+  ["''a\\", "ἃ"],
+  ["''a^", "ἇ"],
+  ["'a/", "ἄ"],
+  ["'a\\", "ἂ"],
+  ["'a^", "ἆ"],
+
+  // with yota
+  ["ee_i", "ῃ"],
+  ["EE_i", "ῌ"],
+  ["oo_i", "ῳ"],
+  ["OO_i", "ῼ"],
+  ["a_i", "ᾳ"],
+
+  // with accent
+  ["ee/", "ή"],
+  ["ee\\", "ὴ"],
+  ["ee^", "ῆ"],
+  ["EE/", "Ή"],
+  ["EE\\", "Ὴ"],
+  ["EE^", "Η͂"],
+  ["oo/", "ώ"],
+  ["oo\\", "ὼ"],
+  ["oo^", "ῶ"],
+  ["OO/", "Ώ"],
+  ["OO\\", "Ὼ"],
+  ["OO^", "Ω͂"],
+  ["a/", "ά"],
+  ["a\\", "ὰ"],
+  ["a^", "ᾶ"],
+
+  // with breathing
+  ["''ee", "ἡ"],
+  ["'ee", "ἠ"],
+  ["''EE", "Ἡ"],
+  ["'EE", "Ἠ"],
+  ["''oo", "ὡ"],
+  ["'oo", "ὠ"],
+  ["''OO", "Ὡ"],
+  ["'OO", "Ὠ"],
+  ["''a", "ἁ"],
+  ["'a", "ἀ"],
+
+  // plain
+  ["ee", "η"],
+  ["EE", "Η"],
+  ["oo", "ω"],
+  ["OO", "Ω"],
+  ["a", "α"],
+  ["A", "Α"],
+  ["e", "ε"],
+  ["E", "Ε"],
+  ["i", "ι"],
+  ["I", "Ι"],
+  ["o", "ο"],
+  ["O", "Ο"],
+  ["u", "υ"],
+  ["U", "Υ"],
+];
+function engToAg(str) {
+  return engToAgDic
+    .reduce((str, [eng, ag]) => str.split(eng).join(ag), str)
+    .replace(/σ(\s)/gi, "ς$1")
+    .replace(/σ$/gi, "ς");
+}
+
 const elements = {
   list: document.querySelector('#list'),
   course: document.querySelector('#course')
@@ -92,7 +268,7 @@ function markupCourse(course) {
   let i = 0;
   window.listeners = {
     textChange: function(value) {
-      document.querySelector('#greek-transcript').textContent = value;
+      document.querySelector('#greek-transcript').textContent = engToAg(value);
     }
   };
   setTimeout(() => {
@@ -103,8 +279,9 @@ function markupCourse(course) {
       <h2 class="question">Question</h2>
       <div class="answer">
         <div id="greek-transcript"></div>
-        <input type="text" id="greek-source" onKeyDown="window.listeners.textChange(this.value)" /></div>
+        <input type="text" id="greek-source" onKeyUp="window.listeners.textChange(this.value)" /></div>
       </div>
+      <div class="ok">Ok</div>
     </div>
   `;
 }
