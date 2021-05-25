@@ -64,8 +64,8 @@ function renderList() {
 
 function markupList(list) {
   const courseLinks = list.map(lesson => (
-    `<a href="#${lesson.id}" class="buttons">${lesson.name}</a>`
-  ));
+    `<a href="#${lesson.id}"><b>${lesson.name}</b></a>`
+  )).join('\n');
   
   return `
     <h2>List of contents</h2>
@@ -84,7 +84,14 @@ function renderCourse(courseName) {
   })
 }
 
-function markupCourse(course) {}
+function markupCourse(course) {
+  return `
+    <div class="course-training">
+      <div class="question">Question</div>
+      <div class="answer"><input type="text" /></div>
+    </div>
+  `;
+}
 
 rerender();
 window.addEventListener('hashchange', rerender);
