@@ -61,8 +61,17 @@ function renderList() {
     });
   })
 }
+
+function markupList(list) {
+  const courseLinks = list.map(lesson => (
+    `<a href="#${lesson.id}" class="buttons">${lesson.name}</a>`
+  ));
   
-function markupList(list) {}
+  return `
+    <h2>List of contents</h2>
+    <div class="list-links">${courseLinks}</div>
+  `;
+}
 
 function renderCourse(courseName) {
   elements.course.textContent = 'Loading...';
@@ -125,6 +134,9 @@ window.addEventListener('hashchange', rerender);
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+    <style>
+      .buttons { background: none !important; }
+      .list-links a { display: block; margin-bottom: 15px }
+    </style>
   </body>
 </html>
